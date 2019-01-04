@@ -14,7 +14,13 @@ import { login, logout } from "./auth";
 import firebase, { firebaseAuth } from "./firebase";
 import ReactLoading from "react-loading";
 const Search = Input.Search;
-
+const ContainerLoading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+`;
 const Title = styled.h2`
   color: #fff;
   font-weight: 300;
@@ -144,7 +150,11 @@ class App extends Component {
   };
   render() {
     if (this.state.loading)
-      return <ReactLoading type={"spin"} color={"black"} />;
+      return (
+        <ContainerLoading>
+          <ReactLoading type={"spin"} color={"black"} />
+        </ContainerLoading>
+      );
     console.log(this.state.positionUser);
     return (
       <React.Fragment>
