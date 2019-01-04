@@ -88,6 +88,16 @@ class App extends Component {
   componentDidMount() {
     let { markers } = this.state;
     firebaseAuth().onAuthStateChanged(user => {
+      if (!!user) {
+        firebase
+          .database()
+          .ref("/users/" + user.uid)
+          .once("value")
+          .then(snapshot => {
+            let user = snapshot.val();
+            this.setState({ positionUser: user.position });
+          });
+      }
       this.setState({ auth: !!user, loading: false, currentUser: user });
     });
 
@@ -155,7 +165,7 @@ class App extends Component {
           <ReactLoading type={"spin"} color={"black"} />
         </ContainerLoading>
       );
-    console.log(this.state.positionUser);
+
     return (
       <React.Fragment>
         <Container>
