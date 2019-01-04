@@ -87,6 +87,7 @@ class App extends Component {
 
   componentDidMount() {
     let { markers } = this.state;
+
     firebaseAuth().onAuthStateChanged(user => {
       if (!!user) {
         firebase
@@ -97,6 +98,7 @@ class App extends Component {
             let user = snapshot.val();
             this.setState({ positionUser: user.position });
           });
+        this.handleGetPosition();
       }
       this.setState({ auth: !!user, loading: false, currentUser: user });
     });
@@ -128,7 +130,7 @@ class App extends Component {
         };
 
         try {
-          this.setUser({
+          await this.setUser({
             userId: currentUser.uid,
             name: currentUser.displayName,
             email: currentUser.email,
@@ -152,9 +154,7 @@ class App extends Component {
   };
 
   handleLogin = () => {
-    login().then(() => {
-      this.handleGetPosition();
-    });
+    login().then(() => {});
   };
 
   handleLogout = () => {
