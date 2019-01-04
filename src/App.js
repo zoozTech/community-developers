@@ -152,7 +152,9 @@ class App extends Component {
   };
 
   handleLogin = () => {
-    login();
+    login().then(() => {
+      this.handleGetPosition();
+    });
   };
 
   handleLogout = () => {
