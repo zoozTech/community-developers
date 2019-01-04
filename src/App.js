@@ -150,7 +150,7 @@ class App extends Component {
       <React.Fragment>
         <Container>
           <Menu>
-            <Title>Community React by zoozTech</Title>
+            <Title>Community React</Title>
             {!this.state.auth ? (
               <Button onClick={this.handleLogin} type="primary">
                 Signin/Signup
