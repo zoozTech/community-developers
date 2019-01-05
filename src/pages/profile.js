@@ -32,9 +32,13 @@ class Profile extends Component {
     loading: true
   };
   componentDidMount() {
-    UsersModel.findOne(this.props.match.params._user).then(data => {
-      this.setState({ loading: false, currentUser: data });
-    });
+    UsersModel.findOne(this.props.match.params._user)
+      .then(data => {
+        this.setState({ loading: false, currentUser: data });
+      })
+      .catch(data => {
+        this.props.history.push("/");
+      });
   }
   render() {
     if (this.state.loading) return <Loading />;

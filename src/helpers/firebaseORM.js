@@ -30,7 +30,8 @@ export default class firebaseORM {
         .ref(`/${this.database}/${id}`)
         .once("value")
         .then(snapshot => {
-          resolve(snapshot.val());
+          if (snapshot.val()) resolve(snapshot.val());
+          reject();
         });
     });
   };
