@@ -41,10 +41,12 @@ export default class ListUsers extends Component {
           dataSource={this.state.users}
           renderItem={user => (
             <List.Item key={user.userId}>
-              <List.Item.Meta
-                avatar={<Avatar src={user.imgUrl} />}
-                title={<Link to={`/u/${user.userId}`}>{user.name}</Link>}
-              />
+              <Link to={`/u/${user.userId}`}>
+                <List.Item.Meta
+                  avatar={<Avatar src={user.imgUrl} />}
+                  title={user.name}
+                />
+              </Link>
             </List.Item>
           )}
         />
