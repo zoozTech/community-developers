@@ -15,6 +15,11 @@ Create a project in Google Cloud to get a google maps key
 REACT_APP_GOOGLE_KEY= your_key
 ```
 
+### Google Analytics
+```
+REACT_APP_GOOGLE_GA = your key
+```
+
 ### Firebase Keys
 Create a project in Firebase and create a Realtime Database
 ```

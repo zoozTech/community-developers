@@ -12,8 +12,7 @@ import Header from "../components/Header";
 import Content from "../components/Content";
 import Loading from "../components/Loading";
 import UsersModel from "../models/users";
-import dotenv from "dotenv";
-let consult = dotenv.config();
+
 const MenuContent = styled.div`
   width: 1040px;
   margin: 0 auto;
@@ -57,7 +56,6 @@ class App extends Component {
   };
 
   componentDidMount() {
-    console.log(process.env);
     firebaseAuth().onAuthStateChanged(user => {
       this.setState({ loading: false, currentUser: user }, () => {
         let { currentUser } = this.state;

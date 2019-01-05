@@ -23,6 +23,7 @@
     "google-maps-react": "^2.0.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-ga": "^2.5.6",
     "react-google-maps": "^9.4.5",
     "react-loading": "^2.0.3",
     "react-router-dom": "^4.3.1",
