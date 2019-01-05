@@ -1,1 +1,1 @@
-export const GOOGLE_KEY = "AIzaSyDKls18s0DbW3UXLpwfCMiC7CZG-EwKJig";
+export const GOOGLE_KEY = process.env.REACT_APP_GOOGLE_KEY;

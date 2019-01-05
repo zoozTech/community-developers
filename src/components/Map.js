@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import UsersModel from "../models/users";
-import { GOOGLE_KEY } from "../helpers/constants";
 class MapContainer extends Component {
   state = {
     markers: [],
@@ -69,5 +68,5 @@ class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: GOOGLE_KEY
+  apiKey: process.env.REACT_APP_GOOGLE_KEY
 })(MapContainer);

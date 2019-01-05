@@ -4,12 +4,10 @@ import "firebase/storage";
 import "firebase/database";
 
 var config = {
-  apiKey: "AIzaSyAzlImvUMCiKQqxQ4p7Z8NmhdiABk-wF8g",
-  authDomain: "community-zooz-1546632699030.firebaseapp.com",
-  databaseURL: "https://community-zooz-1546632699030.firebaseio.com",
-  projectId: "community-zooz-1546632699030",
-  storageBucket: "community-zooz-1546632699030.appspot.com",
-  messagingSenderId: "186239359065"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID
 };
 
 firebase.initializeApp(config);

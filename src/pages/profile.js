@@ -6,7 +6,7 @@ import UsersModel from "../models/users";
 import Header from "../components/Header";
 import Content from "../components/Content";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
-import { GOOGLE_KEY } from "../helpers/constants";
+
 import Loading from "../components/Loading";
 const UserContainer = styled.div`
   width: 400px;
@@ -75,5 +75,5 @@ class Profile extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: GOOGLE_KEY
+  apiKey: process.env.REACT_APP_GOOGLE_KEY
 })(Profile);
