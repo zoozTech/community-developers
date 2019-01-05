@@ -2,6 +2,20 @@
   "name": "community",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Nicholas Eduardo",
+    "email": "nicholasess@gmail.com",
+    "url": "https://github.com/nicholasess"
+  },
+  "homepage": "https://community.zooz.tech/",
+  "bugs": {
+    "url": "https://github.com/zoozTech/community-zooz/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zoozTech/community-zooz.git"
+  },
   "dependencies": {
     "antd": "^3.11.6",
     "firebase": "^5.7.2",
@@ -17,10 +31,12 @@
     "yup": "^0.26.6"
   },
   "scripts": {
-    "start": "BROWSER=none react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +46,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "all-contributors-cli": "^5.6.0"
+  }
 }
