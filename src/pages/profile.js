@@ -56,7 +56,9 @@ class Profile extends Component {
               src={currentUser.imgUrl}
               style={{ cursor: "pointer" }}
             />
-            <TitleUser>{currentUser.name}</TitleUser>
+            <TitleUser>
+              {currentUser.name ? currentUser.name : "Without Name"}
+            </TitleUser>
           </UserContainer>
           <div>
             <Map

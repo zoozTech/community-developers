@@ -43,8 +43,8 @@ export default class ListUsers extends Component {
             <List.Item key={user.userId}>
               <Link to={`/u/${user.userId}`}>
                 <List.Item.Meta
-                  avatar={<Avatar src={user.imgUrl} />}
-                  title={user.name}
+                  avatar={<Avatar size={40} src={user.imgUrl} />}
+                  title={user.name ? user.name : "Without Name"}
                 />
               </Link>
             </List.Item>
