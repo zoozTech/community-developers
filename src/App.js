@@ -90,14 +90,6 @@ class App extends Component {
 
     firebaseAuth().onAuthStateChanged(user => {
       if (!!user) {
-        firebase
-          .database()
-          .ref("/users/" + user.uid)
-          .once("value")
-          .then(snapshot => {
-            let user = snapshot.val();
-            this.setState({ positionUser: user.position });
-          });
         this.handleGetPosition();
       }
       this.setState({ auth: !!user, loading: false, currentUser: user });
