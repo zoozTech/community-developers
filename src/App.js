@@ -51,7 +51,6 @@ const Footer = styled.div`
 class App extends Component {
   constructor(props) {
     super(props);
-    this.firebaseListUsers = firebase.database().ref("/users");
   }
   state = {
     auth: false,
@@ -93,62 +92,71 @@ class App extends Component {
   //     })
   //   });
   // };
-
   componentDidMount() {
-    let { markers, bounds } = this.state;
-
     firebaseAuth().onAuthStateChanged(user => {
-      if (!!user) {
-        this.handleGetPosition();
-      }
+      this.setState({ auth: !!user, loading: false, currentUser: user }, () => {
+        let { currentUser } = this.state;
 
-      this.setState({ auth: !!user, loading: false, currentUser: user });
+        if (currentUser) {
+          this.handleGetPosition();
+        }
+      });
     });
 
-    this.firebaseListUsers.once("value").then(snapshot => {
-      let users = snapshot.val();
-      if (users) {
-        Object.keys(users).forEach(name => {
-          let obj = Object.assign({}, users[name]);
-          obj.visible = false;
-          markers = markers.concat(obj);
-          bounds = bounds.concat(obj.position);
-        });
-
-        this.setState({ markers, bounds });
-      }
-    });
+    this.listUsers();
   }
+
+  listUsers = () => {
+    let { markers, bounds } = this.state;
+    firebase
+      .database()
+      .ref("/users")
+      .once("value")
+      .then(snapshot => {
+        let users = snapshot.val();
+        if (users) {
+          Object.keys(users).forEach(name => {
+            let obj = Object.assign({}, users[name]);
+            obj.visible = false;
+            markers = markers.concat(obj);
+            bounds = bounds.concat(obj.position);
+          });
+
+          this.setState({ markers, bounds });
+        }
+      });
+  };
 
   handleGetPosition = () => {
     let { currentUser } = this.state;
     if (navigator.geolocation) {
       this.setState({ loadingMap: true });
-      navigator.geolocation.getCurrentPosition(async data => {
+      navigator.geolocation.getCurrentPosition(data => {
         let positionUser = {
           lat: data.coords.latitude,
           lng: data.coords.longitude
         };
 
-        try {
-          await this.setUser({
-            userId: currentUser.uid,
-            name: currentUser.displayName,
-            email: currentUser.email,
-            imgUrl: currentUser.photoURL,
-            position: positionUser
+        this.setUser({
+          userId: currentUser.uid,
+          name: currentUser.displayName,
+          email: currentUser.email,
+          imgUrl: currentUser.photoURL,
+          position: positionUser
+        })
+          .then(data => {
+            this.setState(
+              {
+                loadingMap: false
+              },
+              () => {
+                this.listUsers();
+              }
+            );
+          })
+          .catch(err => {
+            console.log(err);
           });
-
-          this.setState({
-            positionUser,
-            loadingMap: false
-          });
-        } catch (error) {
-          this.setState({
-            positionUser,
-            loadingMap: false
-          });
-        }
       });
     } else {
     }

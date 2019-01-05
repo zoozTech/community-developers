@@ -18,14 +18,14 @@ class MapContainer extends Component {
     let { google, markers, toggleMark, bounds } = this.props;
     return (
       <Map bounds={this.populateBounds(bounds)} google={google} zoom={8}>
-        {markers.map(mark => (
+        {markers.map((mark, index) => (
           <Marker
             icon={{
               url: mark.imgUrl,
               anchor: new google.maps.Point(32, 32),
               scaledSize: new google.maps.Size(20, 20)
             }}
-            key={mark.userId}
+            key={mark.userId + index}
             position={mark.position}
           >
             {mark.visible && (
