@@ -56,7 +56,7 @@ class Header extends Component {
         <NavbarContent>
           <div
             style={{
-              width: "250px",
+              width: "130px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center"
@@ -74,7 +74,7 @@ class Header extends Component {
               />
             )}
             <Link to="/">
-              <Title>Community Developers</Title>
+              <Title>Community</Title>
             </Link>
           </div>
           <div>

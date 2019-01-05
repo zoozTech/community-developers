@@ -16,6 +16,11 @@ const UserContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  @media (max-width: 1000px) {
+    width: calc(100% - 20px);
+    padding: 0 10px;
+  }
 `;
 
 const TitleUser = styled.h3`
