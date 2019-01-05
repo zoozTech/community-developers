@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { Button, Input, Avatar } from "antd";
+import { Button, Input, Avatar, Modal } from "antd";
 import {
   withGoogleMap,
   GoogleMap,
   Marker,
-  withScriptjs
+  withScriptjs,
+  InfoWindow
 } from "react-google-maps";
 import styled from "styled-components";
-import GitHubLogin from "react-github-login";
 import { login, logout } from "./auth";
 import firebase, { firebaseAuth } from "./firebase";
 import ReactLoading from "react-loading";
-const Search = Input.Search;
+import { Formik } from "formik";
+import yup from "yup";
+import Map from "./Map";
 const ContainerLoading = styled.div`
   display: flex;
   justify-content: center;
@@ -54,13 +56,21 @@ const Footer = styled.div`
 `;
 
 const MapWithAMarker = withScriptjs(
-  withGoogleMap(({ positionUser, markers = [] }) => (
-    <GoogleMap defaultZoom={8} defaultCenter={positionUser}>
-      {markers.map(mark => (
-        <Marker key={mark.userId} position={mark.position} />
-      ))}
-    </GoogleMap>
-  ))
+  withGoogleMap((props, { positionUser, markers = [], toggleMark }) => {
+    return (
+      <GoogleMap defaultZoom={8} defaultCenter={positionUser}>
+        {markers.map(mark => (
+          <Marker icon={mark.imgUrl} key={mark.userId} position={mark.position}>
+            {mark.visible && (
+              <InfoWindow onClick={() => toggleMark(mark)}>
+                <div>aaaa</div>
+              </InfoWindow>
+            )}
+          </Marker>
+        ))}
+      </GoogleMap>
+    );
+  })
 );
 
 class App extends Component {
@@ -71,7 +81,8 @@ class App extends Component {
     currentUser: {},
     positionUser: { lat: -34.397, lng: 150.644 },
     markers: [],
-    loadingMap: false
+    loadingMap: false,
+    isOpenModal: false
   };
 
   setUser = props => {
@@ -85,6 +96,24 @@ class App extends Component {
     });
   };
 
+  openModalInfo = () => {
+    this.setState({ isOpenModal: true });
+  };
+
+  // handleToggleMark = mark => {
+  //   let { markers } = this.state;
+  //   this.setState({
+  //     markers: markers.map(item => {
+  //       if (item.uid === mark.uid) {
+  //         item = Object.assign({}, item);
+  //         item.visible = !item.visible;
+  //       }
+
+  //       return item;
+  //     })
+  //   });
+  // };
+
   componentDidMount() {
     let { markers } = this.state;
 
@@ -92,6 +121,7 @@ class App extends Component {
       if (!!user) {
         this.handleGetPosition();
       }
+
       this.setState({ auth: !!user, loading: false, currentUser: user });
     });
 
@@ -103,7 +133,9 @@ class App extends Component {
         let users = snapshot.val();
         if (users) {
           Object.keys(users).forEach(name => {
-            markers = markers.concat(users[name]);
+            let obj = Object.assign({}, users[name]);
+            obj.visible = false;
+            markers = markers.concat(obj);
           });
 
           this.setState({ markers });
@@ -146,11 +178,18 @@ class App extends Component {
   };
 
   handleLogin = () => {
-    login().then(() => {});
+    login();
   };
 
   handleLogout = () => {
     logout();
+  };
+
+  handleOk = () => {
+    this.setState({ isOpenModal: false });
+  };
+  handleCancel = () => {
+    this.setState({ isOpenModal: false });
   };
   render() {
     if (this.state.loading)
@@ -172,16 +211,17 @@ class App extends Component {
             ) : (
               <div
                 style={{
-                  width: "350px",
+                  width: "130px",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center"
                 }}
               >
-                <Button onClick={this.handleGetPosition} type="primary">
-                  Set your location
-                </Button>
-                <Avatar size="large" src={this.state.currentUser.photoURL} />
+                <Avatar
+                  size="large"
+                  src={this.state.currentUser.photoURL}
+                  style={{ cursor: "pointer" }}
+                />
                 <Button onClick={this.handleLogout} type="default">
                   Logout
                 </Button>
@@ -195,15 +235,20 @@ class App extends Component {
           </Footer>
         )}
         {!this.state.loadingMap && (
-          <MapWithAMarker
-            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKls18s0DbW3UXLpwfCMiC7CZG-EwKJig&v=3.exp&libraries=geometry,drawing,places"
+          <Map
             positionUser={this.state.positionUser}
-            containerElement={<div style={{ height: `400px` }} />}
-            mapElement={<div style={{ height: `90vh` }} />}
-            loadingElement={<div style={{ height: `100%` }} />}
             markers={this.state.markers}
           />
         )}
+        <Modal
+          title="Update Info"
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          visible={this.state.isOpenModal}
+          closable={true}
+        >
+          aaa
+        </Modal>
       </React.Fragment>
     );
   }
