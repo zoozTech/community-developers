@@ -2,13 +2,6 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { Button, Input, Avatar, Modal } from "antd";
-import {
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-  withScriptjs,
-  InfoWindow
-} from "react-google-maps";
 import styled from "styled-components";
 import { login, logout } from "./auth";
 import firebase, { firebaseAuth } from "./firebase";
@@ -55,25 +48,11 @@ const Footer = styled.div`
   justify-content: center;
 `;
 
-const MapWithAMarker = withScriptjs(
-  withGoogleMap((props, { positionUser, markers = [], toggleMark }) => {
-    return (
-      <GoogleMap defaultZoom={8} defaultCenter={positionUser}>
-        {markers.map(mark => (
-          <Marker icon={mark.imgUrl} key={mark.userId} position={mark.position}>
-            {mark.visible && (
-              <InfoWindow onClick={() => toggleMark(mark)}>
-                <div>aaaa</div>
-              </InfoWindow>
-            )}
-          </Marker>
-        ))}
-      </GoogleMap>
-    );
-  })
-);
-
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.firebaseListUsers = firebase.database().ref("/users");
+  }
   state = {
     auth: false,
     loading: true,
@@ -82,7 +61,8 @@ class App extends Component {
     positionUser: { lat: -34.397, lng: 150.644 },
     markers: [],
     loadingMap: false,
-    isOpenModal: false
+    isOpenModal: false,
+    bounds: []
   };
 
   setUser = props => {
@@ -115,7 +95,7 @@ class App extends Component {
   // };
 
   componentDidMount() {
-    let { markers } = this.state;
+    let { markers, bounds } = this.state;
 
     firebaseAuth().onAuthStateChanged(user => {
       if (!!user) {
@@ -125,22 +105,19 @@ class App extends Component {
       this.setState({ auth: !!user, loading: false, currentUser: user });
     });
 
-    firebase
-      .database()
-      .ref("/users")
-      .once("value")
-      .then(snapshot => {
-        let users = snapshot.val();
-        if (users) {
-          Object.keys(users).forEach(name => {
-            let obj = Object.assign({}, users[name]);
-            obj.visible = false;
-            markers = markers.concat(obj);
-          });
+    this.firebaseListUsers.once("value").then(snapshot => {
+      let users = snapshot.val();
+      if (users) {
+        Object.keys(users).forEach(name => {
+          let obj = Object.assign({}, users[name]);
+          obj.visible = false;
+          markers = markers.concat(obj);
+          bounds = bounds.concat(obj.position);
+        });
 
-          this.setState({ markers });
-        }
-      });
+        this.setState({ markers, bounds });
+      }
+    });
   }
 
   handleGetPosition = () => {
@@ -238,6 +215,7 @@ class App extends Component {
           <Map
             positionUser={this.state.positionUser}
             markers={this.state.markers}
+            bounds={this.state.bounds}
           />
         )}
         <Modal

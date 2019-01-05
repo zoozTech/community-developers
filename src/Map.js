@@ -1,10 +1,23 @@
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 class MapContainer extends Component {
+  populateBounds = boundsex => {
+    let { google } = this.props;
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0; i < boundsex.length; i++) {
+      bounds.extend(boundsex[i]);
+    }
+
+    return bounds;
+  };
+
+  getheatMap = () => {
+    let { google } = this.props;
+  };
   render() {
-    let { google, markers, toggleMark } = this.props;
+    let { google, markers, toggleMark, bounds } = this.props;
     return (
-      <Map google={google} zoom={14}>
+      <Map bounds={this.populateBounds(bounds)} google={google} zoom={8}>
         {markers.map(mark => (
           <Marker
             icon={{
