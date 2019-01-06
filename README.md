@@ -1,6 +1,6 @@
 # Community Developers
 The community developers is a collaborative and real map to share with others developers your location.
-
+<img src="community.png" alt="Docz video">
 ## 🤝 How to Contribute
 To contribute with the project, you don't need to have knowledge in React, starred the project and receive notifications from issues to answer the questions. But if you want to code, you need to create a ```.env.development``` and follow steps below.
 
