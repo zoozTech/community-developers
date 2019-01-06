@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import UsersModel from "../models/users";
 class MapContainer extends Component {
   state = {
@@ -54,13 +54,7 @@ class MapContainer extends Component {
         google={google}
       >
         {markers.map((mark, index) => (
-          <Marker key={index} position={mark.position}>
-            {mark.visible && (
-              <InfoWindow onClick={() => this.toggleMark(mark)}>
-                <div>aaaa</div>
-              </InfoWindow>
-            )}
-          </Marker>
+          <Marker key={index} position={mark.position} />
         ))}
       </Map>
     );
