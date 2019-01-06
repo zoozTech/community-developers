@@ -2,7 +2,7 @@ import firebase from "firebase";
 import "firebase/auth";
 import "firebase/storage";
 import "firebase/database";
-
+import GeoFire from "geofire";
 var config = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -14,4 +14,5 @@ firebase.initializeApp(config);
 
 export const ref = firebase.database().ref();
 export const firebaseAuth = firebase.auth;
+export const geoFire = new GeoFire(ref);
 export default firebase;

@@ -46,9 +46,6 @@ const Footer = styled.div`
 `;
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
   state = {
     loading: true,
     loadingMap: false,

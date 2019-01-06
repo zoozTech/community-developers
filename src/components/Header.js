@@ -83,20 +83,13 @@ class Header extends Component {
                 Signin/Signup
               </Button>
             ) : (
-              <Dropdown
-                trigger={["click"]}
-                overlay={
-                  <Menu>
-                    <Menu.Item onClick={this.handleLogout}>Logout</Menu.Item>
-                  </Menu>
-                }
-              >
+              <Link to="/me">
                 <Avatar
                   size="large"
                   src={this.state.currentUser.photoURL}
                   style={{ cursor: "pointer" }}
                 />
-              </Dropdown>
+              </Link>
             )}
           </div>
         </NavbarContent>
