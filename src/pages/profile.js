@@ -41,7 +41,7 @@ class Profile extends Component {
       .then(data => {
         this.setState({ loading: false, currentUser: data });
       })
-      .catch(data => {
+      .catch(() => {
         this.props.history.push("/");
       });
   }
