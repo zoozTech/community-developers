@@ -74,7 +74,8 @@ class MapContainer extends Component {
   };
   render() {
     let { google } = this.props;
-    let { markers, bounds } = this.state;
+    let { markers } = this.state;
+
     return (
       <div>
         <Map
