@@ -1,0 +1,56 @@
+{
+  "name": "community",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Nicholas Eduardo",
+    "email": "nicholasess@gmail.com",
+    "url": "https://github.com/nicholasess"
+  },
+  "homepage": "https://community.zooz.tech/",
+  "bugs": {
+    "url": "https://github.com/zoozTech/community-zooz/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zoozTech3/community-zooz.git"
+  },
+  "dependencies": {
+    "antd": "^3.11.6",
+    "firebase": "^5.7.2",
+    "formik": "^1.4.1",
+    "geofire": "^4.1.2",
+    "google-maps-react": "^2.0.2",
+    "react": "^16.7.0",
+    "react-animations": "^1.0.0",
+    "react-dom": "^16.7.0",
+    "react-ga": "^2.5.6",
+    "react-google-maps": "^9.4.5",
+    "react-loading": "^2.0.3",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.3",
+    "styled-components": "^4.1.3",
+    "yup": "^0.26.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "all-contributors-cli": "^5.6.0"
+  }
+}
